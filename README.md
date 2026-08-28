@@ -4,21 +4,7 @@ Protótipo interativo e responsivo para demonstrar uma experiência de leitura s
 
 > Projeto exclusivamente demonstrativo. Não realiza OCR, autenticação, diagnóstico ou aconselhamento médico real.
 
-## Como funciona
-
-- Login e cadastro simulados: qualquer e-mail com formato válido e qualquer senha são aceitos.
-- Captura e envio de imagem simulados, sem solicitar acesso real à câmera.
-- Processamento animado com resultado demonstrativo de Paracetamol 500 mg.
-- Modos de leitura detalhado e simplificado.
-- Player de áudio, histórico, favoritos, ajuda, perfil e acessibilidade simulados.
-- Nenhum dado é enviado ou armazenado em servidor.
-
-## Requisitos
-
-- Node.js 22.13 ou superior
-- pnpm
-
-## Executar localmente
+## Como executar
 
 ```bash
 git clone https://github.com/gabrielcorso320/Bula-Clara.git
@@ -27,8 +13,4 @@ pnpm install
 pnpm dev
 ```
 
-Acesse `http://localhost:3000` no navegador.
-
-## Tecnologias
-
-React 19, TypeScript, Vinext/Vite, Tailwind CSS, Lucide Icons e componentes shadcn.
+Acesse `http://localhost:3000`. O login e o cadastro são simulados; qualquer e-mail válido e senha funcionam.
