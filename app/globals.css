@@ -23,4 +23,7 @@ input { min-width:0; flex:1; background:transparent; outline:none; }
 .contrast-mode { filter:contrast(1.25); }
 .contrast-mode main { --surface:#fff; }
 .simple-result { font-size:120%; }
+.profile-link { display:flex; width:100%; align-items:center; gap:1rem; border:1px solid #e2e8f0; border-radius:1rem; background:#fff; padding:1.25rem; font-weight:600; }
+.profile-link svg:first-child { color:#0369a1; }
+.profile-link svg:last-child { margin-left:auto; color:#cbd5e1; }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
