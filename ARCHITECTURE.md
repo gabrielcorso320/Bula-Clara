@@ -1,6 +1,6 @@
 # Arquitetura 7.0 em preparação
 
-Next.js/React com publicação na Vercel a partir do GitHub. A UI em app/page.tsx controla uma consulta efêmera, sem conta automática. Imagens são URLs de objeto locais revogadas ao trocar/remover; a câmera usa getUserMedia e encerra tracks ao desmontar. Só Analisar envia a imagem.
+Next.js/React com publicação no Netlify a partir do GitHub. A UI em app/page.tsx controla uma consulta efêmera, sem conta automática. Imagens são URLs de objeto locais revogadas ao trocar/remover; a câmera usa getUserMedia e encerra tracks ao desmontar. Só Analisar envia a imagem.
 
 POST /api/analyze valida origem, limite do corpo, MIME declarado e assinatura binária; envia a imagem ao Gemini no servidor, com timeout e cancelamento. lib/analysis.mjs valida a estrutura, limita texto e rejeita evidências que não aparecem no original. Isso não comprova fidelidade semântica do modelo: exige avaliação real antes de liberar.
 
