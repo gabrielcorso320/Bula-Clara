@@ -1,46 +1,22 @@
-# BulaClara
+# BulaClara — demonstração interativa
 
-Protótipo interativo e responsivo para demonstrar uma experiência de leitura simplificada de bulas de medicamentos.
+Protótipo para apresentação, com telas responsivas, animações e uma bula fictícia de demonstração. Use **Analisar bula (teste)** para explorar o resumo sem configurar serviços externos. Análise real com Gemini, MP3, autenticação e histórico privado ainda dependem de configuração e implementação.
 
-> Projeto exclusivamente demonstrativo. Não realiza OCR, autenticação, diagnóstico ou aconselhamento médico real.
+## Executar
 
-## Como funciona
+Node.js 22.13+ e pnpm. Execute `pnpm install`, `pnpm dev` e abra o endereço exibido pelo servidor (normalmente http://localhost:3000). Câmera exige HTTPS ou localhost e permissão concedida pelo usuário.
 
-- Login e cadastro simulados: qualquer e-mail com formato válido e qualquer senha são aceitos.
-- Captura e envio de imagem simulados, sem solicitar acesso real à câmera.
-- Processamento animado com resultado demonstrativo de Paracetamol 500 mg.
-- Modos de leitura detalhado e simplificado.
-- Player de áudio, histórico, favoritos, ajuda, perfil e acessibilidade simulados.
-- Nenhum dado é enviado ou armazenado em servidor.
+`pnpm test` valida o contrato e rejeição de conteúdo inválido. `pnpm build` compila. `pnpm start` inicia o Worker compilado.
 
-## Requisitos
+## Disponível no código
 
-- Node.js 22.13 ou superior
-- pnpm
+- Página inicial com celular ilustrativo, ícones interativos e estrelas animadas.
+- Câmera real, seleção JPEG/PNG/WebP até 5 MB, prévia, substituição e remoção.
+- Fluxo sem cadastro, cancelamento de análise, seções com evidências e comparação.
+- Leitura SpeechSynthesis, TXT UTF-8 e PDF pelo diálogo de impressão.
+- Resumo com textos maiores e assuntos fechados inicialmente, com um aberto por vez.
+- Fonte, contraste de cores e pausa de animações persistidos no dispositivo.
+- Demonstração identificada como fictícia, disponível sem chave de API.
+- Endpoint Gemini no servidor, desativado por padrão.
 
-## Executar localmente
-
-```bash
-git clone URL_DO_REPOSITORIO
-cd bulaclara
-pnpm install
-pnpm dev
-```
-
-Acesse `http://localhost:3000` no navegador.
-
-## Gerar a versão de produção
-
-```bash
-pnpm build
-pnpm start
-```
-
-## Tecnologias
-
-- React 19
-- TypeScript
-- Vinext/Vite
-- Tailwind CSS
-- Lucide Icons
-- Componentes shadcn
+Consulte DEPLOYMENT.md para dependências, ARCHITECTURE.md para funcionamento, REQUIREMENTS_TRACEABILITY.md para cobertura e TEST_REPORT.md para evidências. Não coloque chaves em arquivos públicos ou commits. Crie .env.local a partir de .env.example apenas para configuração local.
