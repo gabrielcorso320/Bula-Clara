@@ -6,7 +6,7 @@ Protótipo para apresentação, com telas responsivas, animações e uma bula fi
 
 Node.js 22.13+ e pnpm. Execute `pnpm install`, `pnpm dev` e abra o endereço exibido pelo servidor (normalmente http://localhost:3000). Câmera exige HTTPS ou localhost e permissão concedida pelo usuário.
 
-`pnpm test` valida o contrato e rejeição de conteúdo inválido. `pnpm build` compila. `pnpm start` inicia o Worker compilado.
+`pnpm test` valida o contrato e rejeição de conteúdo inválido. `pnpm build` compila o Next.js. `pnpm start` inicia o servidor compilado.
 
 ## Disponível no código
 
