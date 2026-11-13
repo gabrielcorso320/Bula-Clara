@@ -275,6 +275,21 @@ select {
 .account::backdrop {
   background: #0b1e5988;
 }
+.demo-account { border-radius: 28px; max-height: calc(100dvh - 2rem); overflow-y: auto; }
+.account-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.demo-account h2 { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.15; margin: 1rem 0; overflow-wrap: anywhere; }
+.demo-account p { color: var(--muted); line-height: 1.6; }
+.account-email { overflow-wrap: anywhere; }
+.account-modes { display: flex; gap: .5rem; padding: .35rem; margin: 1.25rem 0; border-radius: 100px; background: var(--surface); }
+.account-modes button { flex: 1; border: 0; background: transparent; }
+.account-modes button[aria-pressed="true"] { background: var(--primary); color: white; }
+.demo-account form { display: grid; gap: 1rem; }
+.demo-account label { display: grid; gap: .4rem; font-size: 1rem; font-weight: 600; }
+.demo-account input { width: 100%; min-width: 0; padding: .9rem 1rem; border: 0; border-radius: 14px; background: var(--surface); color: var(--ink); font-size: 1rem; }
+.account-password { display: flex; align-items: center; gap: .25rem; background: var(--surface); border-radius: 14px; }
+.account-password button { flex-shrink: 0; padding-inline: .75rem; border: 0; background: transparent; font-size: .8rem; }
+.account-submit { width: 100%; min-height: 52px; margin-top: .5rem; }
+.demo-account .account-link { display: block; margin: .75rem auto 0; border: 0; background: transparent; color: var(--ink); }
 .skip-link {
   position: absolute;
   top: -100px;

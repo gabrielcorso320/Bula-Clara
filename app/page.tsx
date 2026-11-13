@@ -32,6 +32,7 @@ type Result = {
   sections: { title: string; text: string; evidence: string }[];
 };
 type Screen = 'home' | 'camera' | 'preview' | 'result';
+type DemoAccount = { name: string; email: string };
 function Action({ icon: Icon, label, className = '', ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { icon: LucideIcon; label: string }) {
   return <button type="button" {...props} className={'icon-action ' + className} aria-label={label} title={label}>
     <Icon aria-hidden /><span className="action-label">{label}</span>
@@ -66,6 +67,21 @@ export default function App() {
     [view, setView] = useState('simple'),
     [account, setAccount] = useState(false),
     [prefReady, setPrefReady] = useState(false);
+  const [demoAccount, setDemoAccount] = useState<DemoAccount | null>(null);
+  function updateDemoAccount(value: DemoAccount | null) {
+    setDemoAccount(value);
+    try {
+      if (value) sessionStorage.setItem('bulaclara-demo-account', JSON.stringify(value));
+      else sessionStorage.removeItem('bulaclara-demo-account');
+    } catch {}
+  }
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('bulaclara-demo-account') || 'null');
+      if (saved && typeof saved.name === 'string' && typeof saved.email === 'string')
+        setDemoAccount({ name: saved.name, email: saved.email });
+    } catch {}
+  }, []);
   const input = useRef<HTMLInputElement>(null),
     controller = useRef<AbortController | null>(null),
     pendingNavigation = useRef<number | undefined>(undefined),
@@ -223,7 +239,7 @@ export default function App() {
         <nav aria-label="Preferências e conta">
           <Action icon={Contrast} label="Contraste" aria-pressed={contrast} onClick={() => setContrast(!contrast)} />
           <Action icon={Accessibility} label="Acessibilidade" aria-expanded={access} onClick={() => setAccess(!access)} />
-          <Action icon={UserRound} label="Entrar" onClick={() => afterPress(() => setAccount(true))} />
+          <Action icon={UserRound} label={demoAccount ? 'Minha conta' : 'Entrar'} onClick={() => afterPress(() => setAccount(true))} />
         </nav>
       </header>
       {access && (
@@ -448,7 +464,7 @@ export default function App() {
         </aside>
       </main>
       <footer>BulaClara · Informação acessível, no seu ritmo.</footer>
-      {account && <Account close={() => setAccount(false)} />}
+      {account && <Account user={demoAccount} updateUser={updateDemoAccount} close={() => setAccount(false)} />}
     </div>
   );
 }
@@ -836,21 +852,72 @@ function Audio({ text }: { text: string }) {
     </div>
   );
 }
-function Account({ close }: { close: () => void }) {
+function Account({ user, updateUser, close }: {
+  user: DemoAccount | null;
+  updateUser: (value: DemoAccount | null) => void;
+  close: () => void;
+}) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [formError, setFormError] = useState('');
   useEffect(() => {
     dialog.current?.showModal();
   }, []);
   return (
-    <dialog className="account" ref={dialog} onCancel={close}>
-      <h2>Sua conta é opcional</h2>
-      <p>
-        O histórico em nuvem ainda não está disponível. Você pode continuar a
-        consulta sem cadastro.
-      </p>
-      <button className="primary" onClick={close}>
-        Continuar sem conta
-      </button>
+    <dialog className="account demo-account" ref={dialog} onCancel={close} aria-labelledby="account-title">
+      <div className="account-header">
+        <span className="eyebrow">Conta de demonstração</span>
+        <Action icon={X} label="Fechar conta" onClick={close} />
+      </div>
+      {user ? (
+        <>
+          <h2 id="account-title">Olá, {user.name}.</h2>
+          <p className="account-email">{user.email}</p>
+          <p role="status">Você entrou na demonstração. Sua conta fica nesta sessão do navegador.</p>
+          <button className="primary account-submit" onClick={close}>Continuar no BulaClara</button>
+          <button className="account-link" onClick={() => { updateUser(null); close(); }}>Sair da conta</button>
+        </>
+      ) : (
+        <>
+          <h2 id="account-title">{mode === 'login' ? 'Bem-vindo de volta.' : 'Vamos começar.'}</h2>
+          <p>Use um e-mail fictício e qualquer senha para experimentar. A senha não será salva.</p>
+          <div className="account-modes" aria-label="Acesso à conta">
+            <button aria-pressed={mode === 'login'} onClick={() => { setMode('login'); setFormError(''); }}>Entrar</button>
+            <button aria-pressed={mode === 'signup'} onClick={() => { setMode('signup'); setFormError(''); }}>Criar conta</button>
+          </div>
+          <form key={mode} onSubmit={event => {
+            event.preventDefault();
+            const fields = new FormData(event.currentTarget);
+            const email = String(fields.get('email') || '').trim();
+            const password = String(fields.get('password') || '');
+            const name = mode === 'signup' ? String(fields.get('name') || '').trim() : email.split('@')[0];
+            if (!name || !password.trim()) {
+              setFormError('Preencha os campos para continuar.');
+              return;
+            }
+            event.currentTarget.reset();
+            updateUser({ name, email });
+          }}>
+            {mode === 'signup' && <label htmlFor="demo-name">Como podemos te chamar?
+              <input id="demo-name" name="name" required maxLength={60} autoComplete="off" placeholder="Seu nome" />
+            </label>}
+            <label htmlFor="demo-email">E-mail
+              <input id="demo-email" name="email" type="email" required maxLength={254} autoComplete="off" placeholder="voce@exemplo.com" />
+            </label>
+            <div>
+              <label htmlFor="demo-password">Senha</label>
+              <span className="account-password">
+                <input id="demo-password" name="password" type={visiblePassword ? 'text' : 'password'} required maxLength={128} autoComplete="new-password" placeholder="Qualquer senha" />
+                <button type="button" aria-pressed={visiblePassword} aria-label={visiblePassword ? 'Ocultar senha' : 'Mostrar senha'} onClick={() => setVisiblePassword(!visiblePassword)}>{visiblePassword ? 'Ocultar' : 'Mostrar'}</button>
+              </span>
+            </div>
+            {formError && <p role="alert">{formError}</p>}
+            <button className="primary account-submit" type="submit">{mode === 'login' ? 'Entrar na demonstração' : 'Criar conta de teste'}</button>
+          </form>
+          <button className="account-link" onClick={close}>Continuar sem conta</button>
+        </>
+      )}
     </dialog>
   );
 }

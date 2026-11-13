@@ -17,6 +17,7 @@ Node.js 22.13+ e pnpm. Execute `pnpm install`, `pnpm dev` e abra o endereço exi
 - Resumo com textos maiores e assuntos fechados inicialmente, com um aberto por vez.
 - Fonte, contraste de cores e pausa de animações persistidos no dispositivo.
 - Demonstração identificada como fictícia, disponível sem chave de API.
+- Login e cadastro demonstrativos aceitam e-mail fictício e qualquer senha preenchida. Nome e e-mail ficam em sessionStorage; a senha não é armazenada nem enviada. Há opção de sair.
 - Endpoint Gemini no servidor, desativado por padrão.
 
 Consulte DEPLOYMENT.md para dependências, ARCHITECTURE.md para funcionamento, REQUIREMENTS_TRACEABILITY.md para cobertura e TEST_REPORT.md para evidências. Não coloque chaves em arquivos públicos ou commits. Crie .env.local a partir de .env.example apenas para configuração local.
