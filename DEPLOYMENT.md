@@ -2,6 +2,8 @@
 
 A versão pública é uma demonstração interativa. O botão **Analisar bula (teste)** usa uma bula fictícia local. A análise real deve permanecer desativada até concluir as dependências e verificar as integrações abaixo.
 
+Na demonstração, o menu **Salvar** oferece TXT, impressão em PDF e o MP3 estático `public/audio/resumo-brisalia.mp3`, com a narração em português do resumo fictício. Esse áudio não é gerado a partir de imagens enviadas e não depende de credenciais em execução. Se o resumo de `lib/demo.ts` mudar, atualize também a gravação. Para resultados reais, a geração dinâmica de MP3 continua pendente.
+
 1. Criar projeto Supabase; obter URL pública e publishable key. Configurar Auth e URLs de redirecionamento. Não enviar service_role ao chat nem ao cliente. Implementar migrations e políticas RLS com auth.uid() antes do histórico; testar isolamento entre dois usuários, visitante e exclusão.
 2. Criar chave Gemini no Google AI Studio e escolher modelo ativo com visão e saída estruturada. Configurar GEMINI_API_KEY e GEMINI_MODEL somente nas variáveis do servidor Netlify (ou .env.local ignorado localmente). Não basta ativar ANALYSIS_ENABLED.
 3. Configurar rate limit distribuído por origem confiável, limite global, quotas do provedor e teto de gasto. Validar imagens no servidor. Só então permitir ANALYSIS_ENABLED=true.

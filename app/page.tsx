@@ -404,6 +404,12 @@ export default function App() {
               <details className="export-menu">
                 <summary>Salvar</summary>
                 <div className="actions">
+                  {result.source === 'demo' && <Action icon={Headphones} label="Baixar resumo em MP3" onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/audio/resumo-brisalia.mp3';
+                    link.download = 'bulaclara-resumo-brisalia.mp3';
+                    link.click();
+                  }} />}
                   <Action icon={Download} label="Baixar TXT" onClick={download} />
                   <Action icon={Printer} label="Salvar PDF" onClick={() => window.print()} />
                   {result.source !== 'demo' && <>
